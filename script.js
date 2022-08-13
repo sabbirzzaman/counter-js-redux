@@ -2,6 +2,25 @@ const countEl = document.getElementById('count');
 const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
 
+// action identifier
+const INCREASE = 'increase';
+const DECREASE = 'decrease'
+
+// action creators
+const increase = (value) => {
+    return {
+        type: INCREASE,
+        payload: value
+    }
+}
+
+const decrease = (value) => {
+    return {
+        type: DECREASE,
+        payload: value
+    }
+}
+
 // declare initial state
 const initialState = {
     value: 0,
@@ -9,15 +28,15 @@ const initialState = {
 
 // create reducer function
 function reducer(state = initialState, action) {
-    if (action.type === 'increase') {
+    if (action.type === INCREASE) {
         return {
             ...state,
-            value: state.value + 1,
+            value: state.value + action.payload,
         };
-    } else if (action.type === 'decrease') {
+    } else if (action.type === DECREASE) {
         return {
             ...state,
-            value: state.value - 1,
+            value: state.value - action.payload,
         };
     } else {
         return state;
@@ -39,13 +58,9 @@ store.subscribe(render);
 
 // button handler
 increaseBtn.addEventListener('click', () => {
-    store.dispatch({
-        type: 'increase',
-    });
+    store.dispatch(increase(10));
 });
 
 decreaseBtn.addEventListener('click', () => {
-    store.dispatch({
-        type: 'decrease',
-    });
+    store.dispatch(decrease(5));
 });
